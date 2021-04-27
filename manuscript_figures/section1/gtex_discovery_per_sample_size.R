@@ -7,9 +7,9 @@ library(data.table)
 require(ggplot2)
 library(tidyr)
 
-statsFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/GTEx/coder_stats.txt"
-copsFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/GTEx/CODer_cops_merged.bed"
-colorFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/raw_input/GTEx/v8/other/color_code_computer.txt"
+statsFile = "cod_identification/GTEx/coder_stats.txt"
+copsFile = "cod_identification/GTEx/CODer_cops_merged.bed"
+colorFile = "raw_input/GTEx/v8/other/color_code_computer.txt"
 
 statsData = fread( statsFile, stringsAsFactors = FALSE, header = FALSE, sep="\t")
 copsData = fread( copsFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")

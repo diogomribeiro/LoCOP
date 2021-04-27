@@ -6,13 +6,13 @@ args = commandArgs(trailingOnly=TRUE)
 inFile = args[1]
 outTag = args[2]
 
-# inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/geuvadis/functional_enrichments/eQTL/roadmap/meta_results.out"
-# inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/functional_enrichments/LCLs/eQTL/roadmap/meta_results.out"
-# inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/functional_enrichments/Lung/eQTL/roadmap/meta_results.out"
-# inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/functional_enrichments/Muscle/eQTL/roadmap/meta_results.out"
+# inFile = "cod_analysis/geuvadis/functional_enrichments/eQTL/roadmap/meta_results.out"
+# inFile = "cod_analysis/GTEx/functional_enrichments/LCLs/eQTL/roadmap/meta_results.out"
+# inFile = "cod_analysis/GTEx/functional_enrichments/Lung/eQTL/roadmap/meta_results.out"
+# inFile = "cod_analysis/GTEx/functional_enrichments/Muscle/eQTL/roadmap/meta_results.out"
 # outTag = "gtex_lcl"
 
-pdf(paste("/users/dribeir1/code/cod/src/cod/paper_figures/section3/lead_eqtl_enrichment_suppl_",outTag,".pdf",sep=""),14,10)
+pdf(paste("lead_eqtl_enrichment_suppl_",outTag,".pdf",sep=""),14,10)
 
 library(data.table)
 library(ggplot2)

@@ -20,7 +20,7 @@ options("scipen"=100, "digits"=2)
 ########
 
 # wantedCorrSign = "+"
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
+inFile = "cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 ###############

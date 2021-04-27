@@ -19,10 +19,10 @@ library(gridExtra)
 filename = "multi_features_distance_matched.bed"
 scriptname = "/users/dribeir1/code/cod/src/cod/paper_figures/section2/gtex_geuvadis_roc_code.R"
 
-uniqueCOPs = fread("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/tissue_conservation/unique_COPs_mintissue5.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
-specificCOPs = fread("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/tissue_conservation/specific_COPs_mintissue5_cutoff0.15.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
-prevalentCOPs = fread("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/tissue_conservation/prevalent_COPs_mintissue5_cutoff0.15_0.5.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
-conservedCOPs = fread("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/tissue_conservation/conserved_COPs_mintissue5_cutoff0.5.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
+uniqueCOPs = fread("cod_analysis/GTEx/tissue_conservation/unique_COPs_mintissue5.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
+specificCOPs = fread("cod_analysis/GTEx/tissue_conservation/specific_COPs_mintissue5_cutoff0.15.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
+prevalentCOPs = fread("cod_analysis/GTEx/tissue_conservation/prevalent_COPs_mintissue5_cutoff0.15_0.5.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
+conservedCOPs = fread("cod_analysis/GTEx/tissue_conservation/conserved_COPs_mintissue5_cutoff0.5.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 
 ########
@@ -30,7 +30,7 @@ conservedCOPs = fread("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_a
 ########
 
 # Chose file and processing
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 nullIDs = mergedData[significant == 1][pairID %in% uniqueCOPs$pairID]$nullId
@@ -48,7 +48,7 @@ dataset1$dataset = dataset1Name
 ########
 
 # Chose file and processing
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 nullIDs = mergedData[significant == 1][pairID %in% specificCOPs$pairID]$nullId
@@ -66,7 +66,7 @@ dataset2$dataset = dataset2Name
 ########
 
 # Chose file and processing
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 nullIDs = mergedData[significant == 1][pairID %in% prevalentCOPs$pairID]$nullId
@@ -84,7 +84,7 @@ dataset3$dataset = dataset3Name
 ########
 
 # Chose file and processing
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 nullIDs = mergedData[significant == 1][pairID %in% conservedCOPs$pairID]$nullId

@@ -9,7 +9,7 @@ library(grid)
 library(gridExtra)
 library(tidyr)
 
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/geuvadis/functional_enrichments/eQTL/meta_results.out"
+inFile = "cod_analysis/geuvadis/functional_enrichments/eQTL/meta_results.out"
 data = fread( inFile, stringsAsFactors = FALSE, header = F, sep=" ")
 
 data$annotation = data.table(unlist(lapply(data$V9, function(x) unlist(strsplit(x,".", fixed = T))[1])))$V1
@@ -22,16 +22,14 @@ data$category = data.table(unlist(lapply(data$V9, function(x) unlist(strsplit(x,
 g1 = ggplot() +
   geom_segment(data = data[category == "shared"], aes(x = V8, xend = V6, y = annotation, yend = annotation, color = annotation), position = position_nudge(y = 0.2), size = 1 ) +
   geom_point(data = data[category == "shared"], aes(x = V7, y = annotation, fill = annotation), color = "black", position = position_nudge(y = 0.2), size = 3, shape = 21) +
-  geom_text(data = data[category == "shared"], aes(x = V7, y = annotation, color = annotation, label = paste0("P=",format.pval(V5, digits = 1) ) ), position = position_nudge(y = 0.05), size = 3.5, fontface = "bold") +
-  geom_text(data = data[category == "shared"], aes(x = V7, y = annotation, color = annotation, label = paste0("OR=",format.pval(V7, digits = 1) ) ), position = position_nudge(y = 0.35), size = 3.5, fontface = "bold") +
+  geom_text(data = data[category == "shared"], aes(x = V7+0.12, y = annotation, color = annotation, label = paste0("P=",format.pval(V5, digits = 1), " OR=",format.pval(V7, digits = 1) ) ), position = position_nudge(y = 0.35), size = 4, fontface = "bold") +
   geom_segment(data = data[category == "unshared"], aes(x = V8, xend = V6, y = annotation, yend = annotation, color = annotation), position = position_nudge(y = -0.2), size = 1, alpha = 0.5 ) +
   geom_point(data = data[category == "unshared"], aes(x = V7, y = annotation, fill = annotation), color = "black", position = position_nudge(y = -0.2), size = 3, shape = 24, alpha = 0.5) +
-  geom_text(data = data[category == "unshared"], aes(x = V7, y = annotation, color = annotation, label = paste0("P=",format.pval(V5, digits = 1) )), position = position_nudge(y = -0.35), size = 3.5, fontface = "bold", alpha = 0.5) +
-  geom_text(data = data[category == "unshared"], aes(x = V7, y = annotation, color = annotation, label = paste0("OR=",format.pval(V7, digits = 1) )), position = position_nudge(y = -0.05), size = 3.5, fontface = "bold", alpha = 0.5) +
+  geom_text(data = data[category == "unshared"], aes(x = V7+0.12, y = annotation, color = annotation, label = paste0("P=",format.pval(V5, digits = 1), " OR=",format.pval(V7, digits = 1) )), position = position_nudge(y = -0.05), size = 4, fontface = "bold", alpha = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   # ggtitle("Odds ratio against background") +
   xlab("Odds ratio") +
-  # xlim(c(0.5,2.5)) +
+  xlim(c(0,4.25) ) +
   scale_fill_manual(values = c("#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#999999","#a65628","#f781bf")) +
   scale_color_manual(values = c("#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#999999","#a65628","#f781bf")) +
   # scale_color_manual(values = c("#fbb4ae","#b3cde3","#ccebc5","#decbe4","#fed9a6","#ffffcc","#e5d8bd","#fddaec")) +
@@ -54,7 +52,7 @@ g2 = ggplot() +
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=20), panel.grid.major=element_blank(), panel.grid.minor=element_blank(),
         legend.position = "none", legend.key = element_rect(size = 1), legend.key.size = unit(1, 'lines'), legend.title = element_text(size = 12), legend.text = element_text(size = 10), 
         panel.background = element_rect(colour = "black", fill = "white", size = 1),
-        axis.text.y = element_blank(), axis.ticks = element_blank(), axis.title.y = element_blank(), plot.margin = unit(c(0.2,0.2,0.2,0), "cm"))
+        axis.text.y = element_blank(), axis.ticks = element_blank(), axis.title.y = element_blank(), plot.margin = unit(c(0.2,0.8,0.2,0), "cm"))
 
 ##############
 # Geuvadis LCL
@@ -80,12 +78,12 @@ g3 = ggplot(mergedData, aes(x = odds, y = annotation, fill = annotation)) +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=20), panel.grid.major=element_blank(), panel.grid.minor=element_blank(),
         legend.position = "None", panel.background = element_rect(colour = "black", fill = "white", size = 1),
-        axis.text.y = element_blank(), axis.ticks = element_blank(), axis.title.y = element_blank())
+        axis.text.y = element_blank(), axis.ticks = element_blank(), axis.title.y = element_blank(), , plot.margin = unit(c(0.2,0.8,0.2,0), "cm"))
 
 ##############
 # GTEx LCL
 ##############
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/functional_enrichments/LCLs/eQTL/meta_results.out"
+inFile = "cod_analysis/GTEx/functional_enrichments/LCLs/eQTL/meta_results.out"
 data = fread( inFile, stringsAsFactors = FALSE, header = F, sep=" ")
 data$annotation = data.table(unlist(lapply(data$V9, function(x) unlist(strsplit(x,".", fixed = T))[1])))$V1
 data$category = data.table(unlist(lapply(data$V9, function(x) unlist(strsplit(x,".", fixed = T))[2])))$V1
@@ -114,11 +112,11 @@ g4 = ggplot(mergedData, aes(x = odds, y = annotation, fill = annotation)) +
         axis.text.y = element_blank(), axis.ticks = element_blank(), axis.title.y = element_blank())
 
 #####
-statsFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/GTEx/coder_stats.txt"
-copFile = "zcat /scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/GTEx/CODer_final_dataset_cops_merged.bed.gz"
-sharedEQTLFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/eqtl_sharing/meta_results_shared.eqtl"
-eQTLFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/eqtl/GTEx/eQTLs/permutation_pass/results/meta_results.eqtl"
-colorFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/raw_input/GTEx/v8/other/color_code_computer.txt"
+statsFile = "cod_identification/GTEx/coder_stats.txt"
+copFile = "zcat cod_identification/GTEx/CODer_final_dataset_cops_merged.bed.gz"
+sharedEQTLFile = "cod_analysis/GTEx/eqtl_sharing/meta_results_shared.eqtl"
+eQTLFile = "eqtl/GTEx/eQTLs/permutation_pass/results/meta_results.eqtl"
+colorFile = "raw_input/GTEx/v8/other/color_code_computer.txt"
 
 statsData = fread( statsFile, stringsAsFactors = FALSE, header = FALSE, sep="\t")
 copData = fread( copFile, stringsAsFactors = FALSE, header = T, sep="\t")
@@ -176,7 +174,7 @@ g5 = ggplot( shareCopPerTissue, aes(x = reorder(tissueName, perc), y = perc, fil
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=14),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_rect(colour = "black", fill = "white", size = 1),
-        axis.text.y = element_text(size = 20), axis.title.y = element_text(size = 20), 
+        axis.text.y = element_text(size = 20), axis.title.y = element_text(size = 18), 
         axis.text.x = element_text(hjust = 1, angle = 45), axis.title.x = element_text(size = 20))
 
 lay <- rbind(c(1,1,1,2,3,3,4,4), c(5,5,5,5,5,5,5,5))

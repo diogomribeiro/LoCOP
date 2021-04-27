@@ -17,10 +17,10 @@ options("scipen"=100, "digits"=2)
 # Load/process data
 ########
 
-# inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/CODer_raw_results.bed"
-# copFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/CODer_distance_controlled_null.bed_positive"
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/CODer_raw_results.bed"
-copFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/CODer_distance_controlled_null.bed"
+# inFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/CODer_raw_results.bed"
+# copFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/CODer_distance_controlled_null.bed_positive"
+inFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/CODer_raw_results.bed"
+copFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/CODer_distance_controlled_null.bed"
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 copData = fread( copFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 

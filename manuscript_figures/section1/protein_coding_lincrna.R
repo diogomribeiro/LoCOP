@@ -9,7 +9,7 @@ library(dplyr)
 library(grid)
 library(gridExtra)
 
-baseFolder = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset"
+baseFolder = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset"
 resFile = paste(baseFolder,"/CODer_raw_results.bed",sep="")
 copFile = paste(baseFolder,"/CODer_cod_identification_cops.bed",sep="")
 
@@ -86,6 +86,114 @@ g2 = ggplot( pieData, aes(x = "", y = perc, fill = gene_pair_type))  +
                            legend.title=element_blank(), legend.position = c(0.67,0.44), legend.text = element_text(size = 24))
 
 grid.arrange(g1,g2,nrow = 1)
+
+###################
+# Gene adjacency
+###################
+allData = fread( "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/CODer_raw_results.bed", stringsAsFactors = FALSE, header = TRUE, sep="\t")
+inFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/CODer_distance_controlled_null.bed"
+copData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
+table(copData$significant)
+allData$tss1 = allData$centralStart
+allData[centralStrand == "-"]$tss1 = allData[centralStrand == "-"]$centralEnd
+allData$tss2 = allData$cisStart
+allData[cisStrand == "-"]$tss2 = allData[cisStrand == "-"]$cisEnd
+d1 = data.table(gene = allData$centralPhenotype, tss = allData$tss1, chr = allData$`#chr`)
+d2 = data.table(gene = allData$cisPheno, tss = allData$tss2, chr = allData$`#chr`)
+allGenes = unique(rbind(d1,d2))
+allGenes = allGenes[order(chr,tss)]
+allGenes$idx = seq(1,nrow(allGenes))
+copData = unique(copData[,.(centralPhenotype,cisPheno,pairID,distance,significant,nullId)])
+allData = unique(allData[,.(centralPhenotype,cisPheno,pairID,distance)])
+allGenes$tss = NULL
+allGenes$chr = NULL
+colnames(allGenes) = c("centralPhenotype","centralIdx")
+d1 = merge(allData,allGenes, by = "centralPhenotype")
+colnames(allGenes) = c("cisPheno","cisIdx")
+mergedData = merge(d1,allGenes, by = "cisPheno")
+mergedData$idxDiff = abs(mergedData$centralIdx - mergedData$cisIdx)
+mergedData = unique(mergedData[,.(pairID,idxDiff)])
+mergedData$significant = -1
+# mergedData[pairID %in% copData[significant == 0]$pairID]$significant = 0
+mergedData[pairID %in% copData[significant == 1]$pairID]$significant = 1
+table(mergedData$significant)
+summary(mergedData$idxDiff)
+summary(mergedData[significant == 1]$idxDiff)
+summary(mergedData[significant == 0]$idxDiff)
+length(unique(mergedData[significant == 1][idxDiff == 1]$pairID))*100/nrow(mergedData[significant == 1])
+length(unique(mergedData[significant == 1][idxDiff == 2]$pairID))*100/nrow(mergedData[significant == 1])
+length(unique(mergedData[significant == 1][idxDiff > 2]$pairID))*100/nrow(mergedData[significant == 1])
+length(unique(mergedData[significant == -1][idxDiff == 1]$pairID))*100/nrow(mergedData[significant == -1])
+length(unique(mergedData[significant == -1][idxDiff == 2]$pairID))*100/nrow(mergedData[significant == -1])
+length(unique(mergedData[significant == -1][idxDiff > 2]$pairID))*100/nrow(mergedData[significant == -1])
+
+g3 = ggplot(mergedData[significant != 0], aes(x = idxDiff, color = as.factor(significant), fill = as.factor(significant) )) +
+  geom_density( alpha = 0.5, size = 1, adjust = 2) +
+  scale_color_manual( values = c("#fec44f","#66C2A5"), label = c("Not co-expressed","COPs"), name = "Gene pairs") +
+  scale_fill_manual( values = c("#fec44f","#66C2A5"), label = c("Not co-expressed","COPs"), name = "Gene pairs") +
+  xlab("# genes in the middle") +
+  theme(legend.position = "none") +
+  theme(plot.title = element_text(hjust = 0.5, size = 28), text = element_text(size=20), aspect.ratio = 1,
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_rect(colour = "black", fill = "white", size = 1.5, linetype = "solid"),
+        legend.key = element_rect(size = 6),legend.key.size = unit(2, 'lines'), plot.margin = unit(c(1,1,1,1), "cm")
+  )
+
+## Same but for a single strand
+allData = fread( "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/CODer_raw_results.bed", stringsAsFactors = FALSE, header = TRUE, sep="\t")
+inFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/CODer_distance_controlled_null.bed"
+copData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
+
+allData = allData[centralStrand == "+"][cisStrand == "+"]
+
+allData$tss1 = allData$centralStart
+allData[centralStrand == "-"]$tss1 = allData[centralStrand == "-"]$centralEnd
+allData$tss2 = allData$cisStart
+allData[cisStrand == "-"]$tss2 = allData[cisStrand == "-"]$cisEnd
+d1 = data.table(gene = allData$centralPhenotype, tss = allData$tss1, chr = allData$`#chr`)
+d2 = data.table(gene = allData$cisPheno, tss = allData$tss2, chr = allData$`#chr`)
+allGenes = unique(rbind(d1,d2))
+allGenes = allGenes[order(chr,tss)]
+allGenes$idx = seq(1,nrow(allGenes))
+copData = unique(copData[,.(centralPhenotype,cisPheno,pairID,distance,significant,nullId)])
+allData = unique(allData[,.(centralPhenotype,cisPheno,pairID,distance)])
+allGenes$tss = NULL
+allGenes$chr = NULL
+colnames(allGenes) = c("centralPhenotype","centralIdx")
+d1 = merge(allData,allGenes, by = "centralPhenotype")
+colnames(allGenes) = c("cisPheno","cisIdx")
+mergedData = merge(d1,allGenes, by = "cisPheno")
+mergedData$idxDiff = abs(mergedData$centralIdx - mergedData$cisIdx)
+mergedData = unique(mergedData[,.(pairID,idxDiff)])
+mergedData$significant = -1
+# mergedData[pairID %in% copData[significant == 0]$pairID]$significant = 0
+mergedData[pairID %in% copData[significant == 1]$pairID]$significant = 1
+table(mergedData$significant)
+summary(mergedData$idxDiff)
+summary(mergedData[significant == 1]$idxDiff)
+summary(mergedData[significant == 0]$idxDiff)
+length(unique(mergedData[significant == 1][idxDiff == 1]$pairID))*100/nrow(mergedData[significant == 1])
+length(unique(mergedData[significant == 1][idxDiff == 2]$pairID))*100/nrow(mergedData[significant == 1])
+length(unique(mergedData[significant == 1][idxDiff > 2]$pairID))*100/nrow(mergedData[significant == 1])
+length(unique(mergedData[significant == -1][idxDiff == 1]$pairID))*100/nrow(mergedData[significant == -1])
+length(unique(mergedData[significant == -1][idxDiff == 2]$pairID))*100/nrow(mergedData[significant == -1])
+length(unique(mergedData[significant == -1][idxDiff > 2]$pairID))*100/nrow(mergedData[significant == -1])
+
+g4 = ggplot(mergedData[significant != 0], aes(x = idxDiff, color = as.factor(significant), fill = as.factor(significant) )) +
+  geom_density( alpha = 0.5, size = 1, adjust = 2) +
+  scale_color_manual( values = c("#fec44f","#66C2A5"), label = c("Not co-expressed","COPs"), name = "Gene pairs") +
+  scale_fill_manual( values = c("#fec44f","#66C2A5"), label = c("Not co-expressed","COPs"), name = "Gene pairs") +
+  xlab("# genes in the middle") +
+  theme(plot.title = element_text(hjust = 0.5, size = 28), text = element_text(size=20), aspect.ratio = 1,
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_rect(colour = "black", fill = "white", size = 1.5, linetype = "solid"),
+        legend.key = element_rect(size = 6),legend.key.size = unit(2, 'lines'), plot.margin = unit(c(1,1,1,1), "cm")
+  )
+
+
+layout = rbind( c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2))
+grid.arrange(g3,g4,nrow = 1, layout_matrix = layout)
+
 
 dev.off()
 

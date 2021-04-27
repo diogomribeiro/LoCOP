@@ -14,18 +14,18 @@ library(gridExtra)
 filename = "multi_features_distance_matched.bed"
 
 tissue = "Lung"
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData1 = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 dataset1Name = "1: Lung"
 tissue =  "Muscle_Skeletal"
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData2 = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 dataset2Name = "2: Muscle Skeletal"
 tissue = "Cells_EBV-transformed_lymphocytes"
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData3 = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 dataset3Name = "3: LCL (GTEx)"
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
+inFile = "cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
 mergedData4 = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 dataset4Name = "4: LCL (Geuvadis)"
 
@@ -72,10 +72,10 @@ g1 = ggplot( data = mergedData, aes(x = dataset, y = totalEnhancers, fill = as.f
 # Other plots
 ########
 
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/CODer_distance_and_variable_controlled_null.bed_positive_expr_metrics"
+inFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/CODer_distance_and_variable_controlled_null.bed_positive_expr_metrics"
 beforeData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/controlling_expression/CODer_distance_and_variable_controlled_null.bed_positive"
+inFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/controlling_expression/CODer_distance_and_variable_controlled_null.bed_positive"
 afterData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 ### Small plots with mean Expr 

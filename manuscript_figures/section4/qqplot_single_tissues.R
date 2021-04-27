@@ -12,7 +12,7 @@ library(grid)
 library(gridExtra)
 # source("/users/dribeir1/code/cod/src/cod/util/r_utils/regression_functions.R")
 
-inFile = "zcat /scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/gwas/all_gwas/35_traits/results/meta.non_redundant_reformatted.tsv.gz"
+inFile = "zcat cod_analysis/GTEx/gwas/all_gwas/35_traits/results/meta.non_redundant_reformatted.tsv.gz"
 
 results = fread( inFile, stringsAsFactors = FALSE, header = F, sep="\t")
 colnames(results) = c("variant","value","tissue","category","trait")
@@ -35,16 +35,16 @@ g1 = ggplot( results[trait == "hypothyroidism"][tissue == "Thyroid"], aes(y = va
   geom_gwas_qq(alpha = 0.8, size = 3.5, shape = 16) +
   geom_gwas_qq(data = results[trait == "hypothyroidism"][tissue == "gwas_sample"], aes(color = tissue), alpha = 0.8, size = 3.5, shape = 16) +
   geom_abline(slope = 1, intercept = 0) +
-  annotate("text", x = 0, y = Inf, label = paste("Shared eQTL inflation:", round(lambda1,2)), hjust = 0, vjust = 2.5, size = 7, fontface = "bold"  ) +
-  annotate("text", x = 0, y = Inf, label = paste("Other eQTL inflation:", round(lambda2,2)), hjust = 0, vjust = 4, size = 7, fontface = "bold"  ) +
-  annotate("text", x = 0, y = Inf, label = paste("GWAS (sample) inflation:", round(lambda3,2)), hjust = 0, vjust = 5.5, size = 7, fontface = "bold"  ) +
+  annotate("text", x = 0, y = Inf, label = paste("Shared eQTL inflation:", round(lambda1,2)), hjust = 0, vjust = 2.5, size = 7.5, fontface = "bold"  ) +
+  annotate("text", x = 0, y = Inf, label = paste("Other eQTL inflation:", round(lambda2,2)), hjust = 0, vjust = 4, size = 7.5, fontface = "bold"  ) +
+  annotate("text", x = 0, y = Inf, label = paste("GWAS (sample) inflation:", round(lambda3,2)), hjust = 0, vjust = 5.5, size = 7.5, fontface = "bold"  ) +
   scale_color_brewer(palette = "Set2", name = "Variants", labels = c("Shared eQTL", "Other eQTL","GWAS (sample)")) +
   ggtitle("Hypothyroidism in Thyroid") +
   xlab("Expected -log10(p-value)") +
   ylab("Observed -log10(p-value)") +
   theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5, size = 28), text = element_text(size=24),
-        legend.position = c(0.22,0.75), legend.title = element_blank(), legend.text = element_text(size = 20), 
+  theme(plot.title = element_text(hjust = 0.5, size = 28), text = element_text(size=26),
+        legend.position = c(0.22,0.72), legend.title = element_blank(), legend.text = element_text(size = 22), 
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_rect(colour = "black", fill = "white", size = 1), aspect.ratio = 1)
 
@@ -56,16 +56,16 @@ g2 = ggplot( results[trait == "systolic_blood_pressure"][tissue == "Artery_Aorta
   geom_gwas_qq(alpha = 0.8, size = 3.5, shape = 16) +
   geom_gwas_qq(data = results[trait == "systolic_blood_pressure"][tissue == "gwas_sample"], aes(color = tissue), alpha = 0.8, size = 3.5, shape = 16) +
   geom_abline(slope = 1, intercept = 0) +
-  annotate("text", x = 0, y = Inf, label = paste("Shared eQTL inflation:", round(lambda1,2)), hjust = 0, vjust = 2.5, size = 7, fontface = "bold"  ) +
-  annotate("text", x = 0, y = Inf, label = paste("Other eQTL inflation:", round(lambda2,2)), hjust = 0, vjust = 4, size = 7, fontface = "bold"  ) +
-  annotate("text", x = 0, y = Inf, label = paste("GWAS (sample) inflation:", round(lambda3,2)), hjust = 0, vjust = 5.5, size = 7, fontface = "bold"  ) +
+  annotate("text", x = 0, y = Inf, label = paste("Shared eQTL inflation:", round(lambda1,2)), hjust = 0, vjust = 2.5, size = 7.5, fontface = "bold"  ) +
+  annotate("text", x = 0, y = Inf, label = paste("Other eQTL inflation:", round(lambda2,2)), hjust = 0, vjust = 4, size = 7.5, fontface = "bold"  ) +
+  annotate("text", x = 0, y = Inf, label = paste("GWAS (sample) inflation:", round(lambda3,2)), hjust = 0, vjust = 5.5, size = 7.5, fontface = "bold"  ) +
   scale_color_brewer(palette = "Set2", name = "Variants", labels = c("Shared eQTL", "Other eQTL","GWAS (sample)")) +
   ggtitle("Systolic Blood Pressure in Artery Aorta") +
   xlab("Expected -log10(p-value)") +
   ylab("Observed -log10(p-value)") +
   theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5, size = 28), text = element_text(size=24),
-        legend.position = c(0.22,0.75), legend.title = element_blank(), legend.text = element_text(size = 20), 
+  theme(plot.title = element_text(hjust = 0.5, size = 28), text = element_text(size=26),
+        legend.position = c(0.22,0.72), legend.title = element_blank(), legend.text = element_text(size = 22), 
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_rect(colour = "black", fill = "white", size = 1), aspect.ratio = 1)
 

@@ -9,9 +9,9 @@ library(gplots)
 require(ggplot2)
 library(tidyr)
 
-# matrixFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/tissue_clustering/v8/tissue_pair_perc_share.tsv"
-matrixFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/tissue_clustering/v8/tissue_pair_perc_share_before_filters.tsv"
-colorFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/raw_input/GTEx/v8/other/color_code_computer.txt"
+# matrixFile = "cod_analysis/GTEx/tissue_clustering/v8/tissue_pair_perc_share.tsv"
+matrixFile = "cod_analysis/GTEx/tissue_clustering/v8/tissue_pair_perc_share_before_filters.tsv"
+colorFile = "raw_input/GTEx/v8/other/color_code_computer.txt"
 
 matrixData = fread( matrixFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 colorCode = fread( colorFile, stringsAsFactors = FALSE, header = FALSE, sep="\t")
@@ -52,6 +52,10 @@ heatmap.2(matrix,
           key.title = "COPs shared",
           key.xlab = "%",
           col=my_palette,       # use on color palette defined earlier
+          # lmat = rbind( c(1,1,1), c(1,1,1) ),
+          lhei = c(1.5, 4),
+          lwid = c(1.5, 4, 0.75)
 )
+
 
 dev.off()

@@ -15,7 +15,7 @@ set.seed(666)
 # number of digits after comma
 options("scipen"=100, "digits"=2)
 
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
+inFile = "cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 ######################
@@ -79,7 +79,7 @@ plot_ROC = function(models){
     scale_color_manual(values = c(discolored[1:count], discolored[count+1]), name = paste("Model"),
                        labels = c("Distance", "CTCF", "Hi-C", "Enhancer", "TF", "Expression", "GO", "LD", "eQTL", "All except eQTL", "All together")) +
     annotate(geom = "text", x = 0.93, y = 0.46, label = " AUC", size = 8) +
-    annotate(geom = "text", x = 0.93, y = 0.22, label = "0.50\n0.57\n0.51\n0.64\n0.61\n0.65\n0.54\n0.52\n0.73\n0.72\n0.82", size = 7.5, lineheight = .825) +
+    annotate(geom = "text", x = 0.93, y = 0.22, label = "0.50\n0.57\n0.51\n0.64\n0.61\n0.65\n0.54\n0.52\n0.74\n0.72\n0.82", size = 7.5, lineheight = .825) +
     theme_linedraw() + theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30), 
                              axis.text.x = element_text(angle = 0, vjust=0.6),
                              panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 

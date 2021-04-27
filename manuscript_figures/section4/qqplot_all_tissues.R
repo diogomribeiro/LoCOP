@@ -17,7 +17,7 @@ library(grid)
 library(gridExtra)
 source("/users/dribeir1/code/cod/src/cod/util/r_utils/regression_functions.R")
 
-inFile = "zcat /scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/gwas/all_gwas/35_traits_all_tissues/results/meta.non_redundant.tsv.gz"
+inFile = "zcat cod_analysis/GTEx/gwas/all_gwas/35_traits_all_tissues/results/meta.non_redundant.tsv.gz"
 results = fread( inFile, stringsAsFactors = FALSE, header = F, sep="\t")
 colnames(results) = c("variant","value","category","trait")
 
@@ -33,7 +33,7 @@ subset = rbind(d1,d2,subset[category == "gwas_sample"])
 ############
 
 # quantiles = data.table(aggregate(subset[,pvalue_log10],list(subset$category, subset$trait), FUN = quantile, probs=c(0.5, 0.75, 0.9, 0.95)))
-traitFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/raw_input/GWAS/uk_biobank/list_traits.txt"
+traitFile = "raw_input/GWAS/uk_biobank/list_traits.txt"
 traits = fread( traitFile, stringsAsFactors = FALSE, header = F, sep="\t")
 traits = traits[order(V1)]
 

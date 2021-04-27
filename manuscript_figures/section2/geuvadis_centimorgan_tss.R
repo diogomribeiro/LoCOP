@@ -66,14 +66,79 @@ g2 = ggplot( data = mergedDataLog[!is.infinite(centiDist0)][!is.infinite(centiDi
 layout = rbind( c(1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2), c(1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2))
 grid.arrange(g1, g2, layout_matrix = layout)
 
-# lm(mergedData$centiDist0 ~ mergedData$centiDist1)
-# lm(mergedDataLog[!is.infinite(centiDist0)][!is.infinite(centiDist1)]$centiDist0 ~ mergedDataLog[!is.infinite(centiDist0)][!is.infinite(centiDist1)]$centiDist1)
-#TODO add slope of R/lm in legend
+#############
+# LD blocks
+#############
+copFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/CODer_distance_controlled_null.bed_positive"
+allFile = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/post_filter/CODer_raw_results.bed"
+copData <- fread(copFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
+allData <- fread(allFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
-# par(mfrow=c(1,2))
-# plot(sort(dist0), sort(dist1), xlab="dist(tss1, tss2) in cM for non-COPs", ylab="dist(tss1, tss2) in cM for COPs", main="Normal scale")
-# abline(0,1,col="red")
-# plot(sort(-log10(dist0)), sort(-log10(dist1)), xlab="-log10(dist(tss1, tss2)) in cM for non-COPs", ylab="-log10(dist(tss1, tss2)) in cM for COPs", main="Logarithmic scale")
-# abline(0,1,col="red")
+allData$tss1 = apply(allData, 1, function(x) {ifelse(x[6] == "+", x[2], x[3])})
+allData$tss2 = apply(allData, 1, function(x) {ifelse(x[11] == "+", x[7], x[8])})
+
+ldFile = "cod_analysis/multiple_features/geuvadis/LD_blocks/fourier_ls-all.bed"
+ldData <- fread(ldFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
+
+finalDataset = data.table()
+for (c in seq(1,22)) {
+  data = allData[`#chr` == c]
+  ld = ldData[chr == paste0("chr",c)]
+  
+  data$tss1bin = cut(as.numeric(data$tss1), breaks=ld$stop)
+  data$tss2bin = cut(as.numeric(data$tss2), breaks=ld$stop)
+  
+  finalDataset = rbind(finalDataset, data)
+}
+
+finalDataset$sameBlock = "across"
+finalDataset[tss1bin == tss2bin]$sameBlock = "same"
+
+# finalDataset$group = "COP"
+# finalDataset[significant == 1]$group = "COP"
+# finalDataset[significant == 0]$group = "Non-COP"
+
+finalDataset$group = "All pairs"
+finalDataset[pairID %in% copData[significant == 1]$pairID]$group = "COP"
+finalDataset[pairID %in% copData[significant == 0]$pairID]$group = "Non-COP"
+
+finalDataset = unique(finalDataset[,.(pairID,group,sameBlock)])
+
+res = data.table(table(finalDataset$sameBlock, finalDataset$group))
+colnames(res) = c("LD_block","group","N")
+
+r = data.table(table(finalDataset$group))
+
+percs =  c(
+  res[group == "All pairs"][LD_block == "across"]$N / r[V1 == "All pairs"]$N,
+  res[group == "All pairs"][LD_block == "same"]$N / r[V1 == "All pairs"]$N,
+  
+  res[group == "COP"][LD_block == "across"]$N / r[V1 == "COP"]$N,
+  res[group == "COP"][LD_block == "same"]$N / r[V1 == "COP"]$N,
+  
+  res[group == "Non-COP"][LD_block == "across"]$N / r[V1 == "Non-COP"]$N,
+  res[group == "Non-COP"][LD_block == "same"]$N / r[V1 == "Non-COP"]$N
+)
+
+res$perc = round(percs * 100,1)
+
+res$fill = c(4,5,2,3,0,1)
+ggplot(res, aes(x = group, y = perc, fill = as.factor(fill) )) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual( values = c("#d9d9d9","#969696","#ccece6","#66C2A5","#ffeda0","#feb24c"), 
+                     label = c("Non-COP | Across LD blocks","Non-COP | Same LD block", "COP | Across LD blocks", "COP | Same LD block", "All pairs | Across LD blocks", "All pairs | Same LD block")) +
+  annotate(geom = "text", label = paste0(res[LD_block == "across"][group == "COP"]$perc, "%"), x = "COP", y = max(res$perc)*1.08, size = 8) +
+  annotate(geom = "text", label = paste0(res[LD_block == "same"][group == "COP"]$perc, "%"), x = "COP", y = max(res$perc)/1.8, size = 8) +
+  annotate(geom = "text", label = paste0(res[LD_block == "across"][group == "Non-COP"]$perc, "%"), x = "Non-COP", y = max(res$perc)*1.08, size = 8) +
+  annotate(geom = "text", label = paste0(res[LD_block == "same"][group == "Non-COP"]$perc,"%"), x = "Non-COP", y = max(res$perc)/1.8, size = 8) +
+  annotate(geom = "text", label = paste0(res[LD_block == "across"][group == "All pairs"]$perc, "%"), x = "All pairs", y = max(res$perc)*0.98, size = 8) +
+  annotate(geom = "text", label = paste0(res[LD_block == "same"][group == "All pairs"]$perc, "%"), x = "All pairs", y = max(res$perc)/1.8, size = 8) +
+  ylab("% gene pairs") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=24),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.title = element_blank(),
+        panel.background = element_rect(colour = "black", fill = "white", size = 1), aspect.ratio = 1)
+
+
 
 dev.off()

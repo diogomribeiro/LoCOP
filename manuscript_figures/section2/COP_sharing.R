@@ -7,7 +7,7 @@ require(ggplot2)
 library(grid)
 library(gridExtra)
 
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/tissue_conservation/COP_specificity_stats.txt"
+inFile = "cod_analysis/GTEx/tissue_conservation/COP_specificity_stats.txt"
 
 data = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 

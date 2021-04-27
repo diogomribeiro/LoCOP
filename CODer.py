@@ -1152,7 +1152,7 @@ if __name__ == "__main__":
                              help='If different than default, apply multiple test correction for all phenotypes.\
                               Results with FDR above given value will be filtered out. Use values from 0 to 1 (not percentage). (default = -1 / "OFF")')
         parser.add_argument('--minimumCorrelation', metavar='minimumCorrelation', type=float, default = CODer.DEFAULT_PARAM_MINIMUM_CORRELATION, 
-                             help='Minimum correlation level between phenotypes to be considered into a COD. (default = OFF)')
+                             help='Minimum correlation level between phenotypes for COP detection. (default = OFF)')
         parser.add_argument('--negativeCorrelation', metavar='negativeCorrelation', type=int, default = CODer.DEFAULT_PARAM_NEGATIVE_CORRELATION, 
                              help='If 0, use normal correlation values (positive/negative). If 1, square the correlation value. \
                              If 2, use absolute correlation value (default = 2)')

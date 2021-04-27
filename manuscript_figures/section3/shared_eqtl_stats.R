@@ -7,11 +7,11 @@ library(data.table)
 library(ggplot2)
 library(tidyr)
 
-statsFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/GTEx/coder_stats.txt"
-copFile = "zcat /scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/GTEx/CODer_final_dataset_cops_merged.bed.gz"
-sharedEQTLFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/eqtl_sharing/meta_results_shared.eqtl"
-eQTLFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/eqtl/GTEx/eQTLs/permutation_pass/results/meta_results.eqtl"
-colorFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/raw_input/GTEx/v8/other/color_code_computer.txt"
+statsFile = "cod_identification/GTEx/coder_stats.txt"
+copFile = "zcat cod_identification/GTEx/CODer_final_dataset_cops_merged.bed.gz"
+sharedEQTLFile = "cod_analysis/GTEx/eqtl_sharing/meta_results_shared.eqtl"
+eQTLFile = "eqtl/GTEx/eQTLs/permutation_pass/results/meta_results.eqtl"
+colorFile = "raw_input/GTEx/v8/other/color_code_computer.txt"
 
 statsData = fread( statsFile, stringsAsFactors = FALSE, header = FALSE, sep="\t")
 copData = fread( copFile, stringsAsFactors = FALSE, header = T, sep="\t")

@@ -4,14 +4,14 @@ pdf("discovery_by_sample_size.pdf",13,12)
 library(data.table)
 library(ggplot2)
 
-statsData = fread("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/GTEx/tissue_conservation/COP_specificity_stats.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
-copData = fread("zcat /scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/GTEx/CODer_final_dataset_cops_merged.bed.gz", stringsAsFactors = FALSE, header = TRUE, sep="\t")
+statsData = fread("cod_analysis/GTEx/tissue_conservation/COP_specificity_stats.txt", stringsAsFactors = FALSE, header = TRUE, sep="\t")
+copData = fread("zcat cod_identification/GTEx/CODer_final_dataset_cops_merged.bed.gz", stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
-coderStats = fread("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/GTEx/coder_stats.txt", stringsAsFactors = FALSE, header = F, sep="\t")
+coderStats = fread("cod_identification/GTEx/coder_stats.txt", stringsAsFactors = FALSE, header = F, sep="\t")
 coderStats = coderStats[V2 == "Total samples"][,.(V1,V3)]
 colnames(coderStats) = c("tissue","sample_size")
 
-colorCode = fread( "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/raw_input/GTEx/v8/other/color_code_computer.txt", stringsAsFactors = FALSE, header = FALSE, sep="\t")
+colorCode = fread( "raw_input/GTEx/v8/other/color_code_computer.txt", stringsAsFactors = FALSE, header = FALSE, sep="\t")
 
 
 mergedData = unique(merge(statsData,copData,by="pairID"))

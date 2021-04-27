@@ -15,22 +15,22 @@ library(gridExtra)
 filename = "multi_features_distance_matched.bed"
 
 tissue = "Lung"
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData1 = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 dataset1Name = "1: Lung"
 
 # Chose file and processing
 tissue =  "Muscle_Skeletal"
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData2 = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 dataset2Name = "2: Muscle Skeletal"
 
 tissue = "Cells_EBV-transformed_lymphocytes"
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData3 = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 dataset3Name = "3: LCL (GTEx)"
 
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
+inFile = "cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
 mergedData4 = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 dataset4Name = "4: LCL (Geuvadis)"
 

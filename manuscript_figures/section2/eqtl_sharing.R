@@ -1,7 +1,7 @@
 #23-June-2020 # Diogo Ribeiro @ UNIL
 # Script to perform a logistic regression between genes being co-expressed and several molecular features
 
-pdf("/users/dribeir1/code/cod/src/cod/paper_figures/section2/eqtl_sharing.pdf",10,14)
+pdf("eqtl_sharing.pdf",10,14)
 
 library(data.table)
 library(ggplot2)
@@ -12,7 +12,7 @@ library(gridExtra)
 ################
 # eGenes only
 ################
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
+inFile = "cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 mergedData$group = "COP"
@@ -47,14 +47,14 @@ g1 = ggplot( data = d, aes(x = group, y = N, fill = as.factor(fill) ) ) +
 # All genes pairs, also trans
 ################
 
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
+inFile = "cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 mergedData$group = "COP"
 mergedData[significant == 0]$group = "Non-COP"
 mergedData[eqtlSharing == 2]$eqtlSharing = 1
 mergedData = mergedData[,.(group, eqtlSharing, pairID)]
 
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/geuvadis/eQTLs/eqtl_sharing/trans_vs_cis/4_groups_eqtl_sharing.bed"
+inFile = "cod_analysis/geuvadis/eQTLs/eqtl_sharing/trans_vs_cis/4_groups_eqtl_sharing.bed"
 mergedData2 = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 mergedData2 = mergedData2[group == "Trans-COP"]
 mergedData2[eqtlSharing == 2]$eqtlSharing = 1

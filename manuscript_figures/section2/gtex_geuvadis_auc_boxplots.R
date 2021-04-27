@@ -1,7 +1,7 @@
 #02-June-2020 # Diogo Ribeiro @ UNIL
 # Script to perform molecular feature result comparisons
 
-pdf("gtex_geuvadis_auc_boxplots.pdf",15,7)
+pdf("gtex_geuvadis_auc_boxplots.pdf",13,6)
 
 library(data.table)
 library(ggplot2)
@@ -19,7 +19,7 @@ scriptname = "/users/dribeir1/code/cod/src/cod/paper_figures/section2/gtex_geuva
 
 # Chose file and processing
 tissue = "Lung"
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 # Run and store
@@ -35,7 +35,7 @@ dataset1$dataset = dataset1Name
 
 # Chose file and processing
 tissue =  "Muscle_Skeletal"
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 # Run and store
@@ -51,7 +51,7 @@ dataset2$dataset = dataset2Name
 
 # Chose file and processing
 tissue = "Cells_EBV-transformed_lymphocytes"
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/GTEx/",tissue,"/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 # Run and store
@@ -66,7 +66,7 @@ dataset3$dataset = dataset3Name
 ########
 
 # Chose file and processing
-inFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
+inFile = "cod_analysis/multiple_features/geuvadis/multi_features_distance_matched.bed"
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 # Run and store
@@ -101,9 +101,9 @@ ggplot( resultDF, aes(x = model, y = auc, fill = dataset ))  +
   scale_fill_brewer(palette="Set3", labels = c("Lung (N = 4398)","Muscle Skeletal (N = 5401)", "LCL (GTEx) (N = 4702)","LCL (Geuvadis) (N = 6668)")) +
   scale_x_discrete(labels = c("Distance","CTCF","Enhancer","TF","Expression","GO","eQTL","All together")) + 
   theme_linedraw() +
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=24), 
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=22), 
         axis.text.x = element_text(vjust=0.6),
-        legend.position = c(0.15, 0.83), legend.text=element_text(size=20), legend.title=element_blank(),
+        legend.position = c(0.20, 0.83), legend.text=element_text(size=18), legend.title=element_blank(),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black", size = 1),
         panel.border = element_rect(colour = "black", fill=NA, size=1))

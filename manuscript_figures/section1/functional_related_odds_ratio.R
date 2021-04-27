@@ -18,8 +18,8 @@ library(RColorBrewer)
 #   stop("All arguments need to be provided", call.=FALSE)
 # }
 
-inputFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/geuvadis/same_function/results.txt"
-# inputFile = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/geuvadis/same_function/after_paralog_filter/results.txt"
+inputFile = "cod_analysis/geuvadis/same_function/results.txt"
+# inputFile = "cod_analysis/geuvadis/same_function/after_paralog_filter/results.txt"
 
 dataset <- fread(inputFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 

@@ -18,7 +18,7 @@ scriptname = "/users/dribeir1/code/cod/src/cod/paper_figures/section2/geuvadis_r
 ########
 
 # Chose file and processing
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/geuvadis/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 # Run and store
@@ -33,7 +33,7 @@ dataset1$dataset = dataset1Name
 ########
 
 # Chose file and processing
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/geuvadis/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 nullIds = mergedData[distance < 200000][significant == 1]$nullId
@@ -51,7 +51,7 @@ dataset2$dataset = dataset2Name
 ########
 
 # Chose file and processing
-inFile = paste("/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_analysis/multiple_features/geuvadis/",filename,sep="")
+inFile = paste("cod_analysis/multiple_features/geuvadis/",filename,sep="")
 mergedData = fread( inFile, stringsAsFactors = FALSE, header = TRUE, sep="\t")
 
 nullIds = mergedData[distance >= 200000][significant == 1]$nullId

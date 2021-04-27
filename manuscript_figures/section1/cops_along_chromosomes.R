@@ -8,7 +8,7 @@ require(ggplot2)
 library(grid)
 library(gridExtra)
 
-baseFolder = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset"
+baseFolder = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset"
 resFile = paste(baseFolder,"/CODer_raw_results.bed",sep="")
 copFile = paste(baseFolder,"/CODer_cod_identification_cops.bed",sep="")
 
@@ -62,7 +62,7 @@ g1 = ggplot( ) +
 ############
 # FDR 5%
 ############ 
-baseFolder = "/scratch/axiom/FAC/FBM/DBC/odelanea/glcoex/dribeiro/cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/fdr0.05"
+baseFolder = "cod_identification/geuvadis/all_chr/final_fdr0.01/final_dataset/fdr0.05"
 resFile = paste(baseFolder,"/CODer_raw_results.bed",sep="")
 copFile = paste(baseFolder,"/CODer_cod_identification_cops.bed",sep="")
 
