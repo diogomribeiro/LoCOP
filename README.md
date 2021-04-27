@@ -1,6 +1,6 @@
 # LoCOP: The molecular basis, genetic control and pleiotropic effects of local gene co-expression
 This repository contains scripts for data processing, analysis and figure generation data for our paper:
-**TODO: ADD LINK TO PAPER**
+https://www.biorxiv.org/content/10.1101/2020.12.11.421396v1
 
 ## Analysis scripts
 - **CODer.py** : Script to identify local co-expressed gene pairs (COPs) given a gene expression matrix. Example usage: python3 CODer.py expression_matrix.bed output_folder 1000 --fdrCutoff 0.01
