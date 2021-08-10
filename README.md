@@ -1,7 +1,7 @@
 # LoCOP: The molecular basis, genetic control and pleiotropic effects of local gene co-expression
 This repository contains scripts for data processing, analysis and figure generation data for our paper:
 
-Ribeiro DM, Rubinacci S, Ramisch A, Hofmeister RJ, Dermitzakis ET, Delaneau O. Nat. Commun. **12**, 4842 (2021). https://www.nature.com/articles/s41467-021-25129-x
+Ribeiro DM, Rubinacci S, Ramisch A, Hofmeister RJ, Dermitzakis ET, Delaneau O. **The molecular basis, genetic control and pleiotropic effects of local gene co-expression.** Nat. Commun. 12, 4842 (2021). https://www.nature.com/articles/s41467-021-25129-x
 
 ## Analysis scripts
 - **CODer.py** : Script to identify local co-expressed gene pairs (COPs) given a gene expression matrix. Example usage: python3 CODer.py expression_matrix.bed output_folder 1000 --fdrCutoff 0.01
