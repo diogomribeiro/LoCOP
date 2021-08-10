@@ -1,5 +1,6 @@
 # LoCOP: The molecular basis, genetic control and pleiotropic effects of local gene co-expression
 This repository contains scripts for data processing, analysis and figure generation data for our paper:
+
 Ribeiro DM, Rubinacci S, Ramisch A, Hofmeister RJ, Dermitzakis ET, Delaneau O. Nat. Commun. **12**, 4842 (2021). https://www.nature.com/articles/s41467-021-25129-x
 
 ## Analysis scripts
